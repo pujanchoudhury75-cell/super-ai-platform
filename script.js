@@ -1,4 +1,4 @@
-lucide.createIcons();
+chat'at'cide.createIcons();
 
 function switchTab(tab) {
     ['view-chat', 'view-coding', 'view-image', 'view-agent'].forEach(v => {
@@ -33,7 +33,7 @@ async function sendMessage() {
     // Localhost / Render Backend URL
     const backendUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
         ? 'http://localhost:3000/api/chat'
-        : 'https://super-ai-backend.onrender.com/api/chat'; // <-- Yahan apna Render Backend URL daalein
+        : '[https://super-ai-platform.onrender.com](https://super-ai-platform.onrender.com)'; // <-- Yahan apna Render Backend URL daalein
 
     try {
         const res = await fetch(backendUrl, {
