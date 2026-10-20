@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="hi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super AI Platform</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#16a34a">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 500: '#22c55e', 600: '#16a34a', 900: '#052e16' }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-gray-100 flex h-screen overflow-hidden font-sans">
+
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-gray-950 border-r border-gray-800 flex flex-col justify-between z-20">
+        <div>
+            <div class="p-4 flex items-center space-x-2 border-b border-gray-800">
+                <div class="p-2 bg-gradient-to-tr from-green-500 to-emerald-700 rounded-lg">
+                    <i data-lucide="brain" class="w-6 h-6 text-white"></i>
+                </div>
+                <span class="font-bold text-lg tracking-wide text-white">Super AI</span>
+            </div>
+            <nav class="p-3 space-y-1">
+                <button onclick="switchTab('chat')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i data-lucide="message-square" class="w-5 h-5 text-green-400"></i>
+                    <span>Super AI Chat</span>
+                </button>
+                <button onclick="switchTab('coding')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i data-lucide="code" class="w-5 h-5 text-blue-400"></i>
+                    <span>AI Coding</span>
+                </button>
+                <button onclick="switchTab('image')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i data-lucide="image" class="w-5 h-5 text-purple-400"></i>
+                    <span>Image Generator</span>
+                </button>
+                <button onclick="switchTab('agent')" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition">
+                    <i data-lucide="bot" class="w-5 h-5 text-emerald-400"></i>
+                    <span>AI Agent</span>
+                </button>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-gray-800 flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-full bg-green-600 flex items-center justify-center font-bold text-white text-sm">U</div>
+            <div>
+                <p class="text-sm font-semibold text-white">Public Account</p>
+                <p class="text-xs text-gray-400">Online Mode</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col h-full bg-gray-900 relative">
+        <header class="h-16 border-b border-gray-800 flex items-center justify-between px-6 bg-gray-900/80 backdrop-blur">
+            <h1 id="tab-title" class="text-lg font-semibold text-white">🧠 Super AI Chat</h1>
+            <span class="text-xs px-2.5 py-1 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Online
+            </span>
+        </header>
+
+        <div id="content-area" class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+            
+            <!-- Chat View -->
+            <div id="view-chat" class="tab-view max-w-4xl mx-auto flex flex-col h-full">
+                <div id="chat-messages" class="flex-1 space-y-4 overflow-y-auto mb-4 pr-2 custom-scrollbar">
+                    <div class="flex items-start space-x-3 bg-gray-800/40 p-4 rounded-2xl border border-gray-800">
+                        <div class="w-8 h-8 rounded-lg bg-green-600 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="bot" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 font-semibold mb-1">Super AI System</p>
+                            <p class="text-sm text-gray-200">Namaste! Main aapka All-in-One Super AI assistant hu. Aaj hum kya banayein?</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-gray-800 bg-gray-950 p-2 rounded-2xl flex items-center space-x-2 shadow-2xl">
+                    <input id="chat-input" type="text" placeholder="Kuch bhi poochhein..." class="flex-1 bg-transparent text-sm text-white focus:outline-none px-3" onkeypress="handleKeyPress(event)">
+                    <button onclick="sendMessage()" class="p-2.5 bg-green-600 hover:bg-green-500 text-white rounded-xl transition">
+                        <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Coding View -->
+            <div id="view-coding" class="tab-view hidden h-full flex flex-col space-y-4">
+                <div class="flex items-center justify-between bg-gray-950 p-3 rounded-xl border border-gray-800">
+                    <span class="text-xs font-semibold uppercase text-blue-400">HTML / CSS Playground</span>
+                    <button onclick="runLiveCode()" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-lg">Run Code</button>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 min-h-[450px]">
+                    <textarea id="code-editor" class="bg-gray-950 p-4 font-mono text-xs text-green-400 border border-gray-800 rounded-xl resize-none focus:outline-none"><h1>Hello World!</h1></textarea>
+                    <iframe id="preview-frame" class="w-full h-full bg-white border border-gray-800 rounded-xl"></iframe>
+                </div>
+            </div>
+
+            <!-- Image View -->
+            <div id="view-image" class="tab-view hidden max-w-4xl mx-auto flex flex-col space-y-6">
+                <div class="bg-gray-950 p-6 rounded-2xl border border-gray-800 flex gap-2">
+                    <input id="image-prompt" type="text" placeholder="Prompt likhein..." class="flex-1 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                    <button onclick="generateImage()" class="px-6 py-3 bg-purple-600 text-white rounded-xl font-semibold">Generate</button>
+                </div>
+                <div class="bg-gray-950 p-4 rounded-2xl border border-gray-800 min-h-[350px] flex items-center justify-center">
+                    <p id="image-placeholder" class="text-sm text-gray-500">Image yahan dikhegi</p>
+                    <img id="generated-image" class="hidden max-h-[500px] rounded-xl">
+                </div>
+            </div>
+
+            <!-- Agent View -->
+            <div id="view-agent" class="tab-view hidden max-w-4xl mx-auto flex flex-col space-y-6">
+                <div class="bg-gray-950 p-6 rounded-2xl border border-gray-800 flex gap-2">
+                    <input id="agent-goal" type="text" placeholder="Task goal..." class="flex-1 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                    <button onclick="runAgentTask()" class="px-6 py-3 bg-emerald-600 text-white rounded-xl font-semibold">Run Agent</button>
+                </div>
+                <div id="agent-logs" class="bg-gray-950 p-4 rounded-2xl border border-gray-800 text-xs font-mono text-gray-300 min-h-[200px]"></div>
+            </div>
+
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
